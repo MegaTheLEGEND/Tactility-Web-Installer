@@ -1,0 +1,22 @@
+{
+  "name": "Tactilty For Core2",
+  "version": "0.1.0",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "Core2",
+      "ota": {
+        "path": "24.11.1/esp-web-tools-example-esp32.ota.bin",
+        "md5": "28a9229a68208b887edbd7e52414aef7",
+        "summary": "## What's Changed\r\n* Updates for ESPHome 2024.9.0 by @jesserockz in https://github.com/esphome/firmware/pull/265\r\n* fix rp2040 build break by @nkinnan in https://github.com/esphome/firmware/pull/269\r\n* Fix voice-assistant display configs by @deisterhold in https://github.com/esphome/firmware/pull/267\r\n* Bump actions/checkout from 4.1.7 to 4.2.0 by @dependabot in https://github.com/esphome/firmware/pull/270\r\n* Bump actions/checkout from 4.2.0 to 4.2.1 by @dependabot in https://github.com/esphome/firmware/pull/274\r\n* Bump actions/checkout from 4.2.1 to 4.2.2 by @dependabot in https://github.com/esphome/firmware/pull/277\r\n* Upload files to release as well by @jesserockz in https://github.com/esphome/firmware/pull/280\r\n* Bump ESPHome to 2024.11.1 by @jesserockz in https://github.com/esphome/firmware/pull/281\r\n\r\n## New Contributors\r\n* @nkinnan made their first contribution in https://github.com/esphome/firmware/pull/269\r\n* @deisterhold made their first contribution in https://github.com/esphome/firmware/pull/267\r\n\r\n**Full Changelog**: https://github.com/esphome/firmware/compare/24.8.3...24.11.1",
+        "release_url": "https://github.com/esphome/firmware/releases/tag/24.11.1"
+      },
+      "parts": [
+        {
+          "path": "24.11.1/esp-web-tools-example-esp32.factory.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

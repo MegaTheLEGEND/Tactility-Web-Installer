@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tactility Web Installer</title>
+  <script
+    type="module"
+    src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
+  ></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(135deg, #21222b, #21122b);
+      color: #eceff4;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+	  --esp-tools-button-color #A020F0;
+
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      background: #21222b;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .container h1 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+	
+	.container p {
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+	
+	.device-selector {
+      margin: 1.5rem 0;
+    }
+
+    .device-selector label {
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+
+    .device-selector select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #5e81ac;
+      border-radius: 5px;
+      background-color: #2e3440;
+      color: #eceff4;
+    }
+
+    button[slot="activate"] {
+      background: #ee81c3;
+      color: #2e3440;
+      font-size: 1.2rem;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button[slot="activate"]:hover {
+      background: #5e81ac;
+    }
+
+    [slot="unsupported"], 
+    [slot="not-allowed"] {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #bf616a;
+      opacity: 0.9;
+    }
+
+    a {
+      color: #33bbff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+	
+	.footer {
+	  position: fixed;
+	  bottom: 0;
+	  left: 0;
+      text-align: center;
+      padding: .8rem;
+      background: #21222b;
+      border-radius: 0px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 100%;
+	  opacity: 0.7;
+	  
+	.footer p {
+	  font-size: 1.2rem;
+	}
+    
+	
+	
+	
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tactility Web Installer</h1>
+
+	<div class="device-selector" id="device-menu" style="display: none;">
+	  <label for="device">Select Device:</label>
+	  <select id="device">
+		<option value="tdeck">T-Deck</option>
+		<option value="core2">Core2</option>
+		<option value="coreS3">CoreS3</option>
+		<option value="yb">Yellow Board</option>
+		<option value="headless">Headless</option>
+	  </select>
+	</div>
+
+    
+    <esp-web-install-button>
+      <button slot="activate">Install Now</button>
+      <span slot="unsupported">Ah snap, your browser is not supported.</span>
+      <span slot="not-allowed">Ah snap, you are not allowed to use this on HTTP.</span>
+    </esp-web-install-button>
+
+    <p>
+      Need help? Visit the <a href="https://tactility.one" target="_blank">Tactility Docs</a>.
+    </p>
+  </div>
+
+  <div class="footer">
+    <div class="social-buttons">
+      <a href="https://github.com/" target="_blank" class="button github">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </div>
+    <p>
+      Built with <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>.
+    </p>
+  </div>
+
+  <script>
+    const deviceSelect = document.getElementById("device");
+    const installButton = document.querySelector("esp-web-install-button");
+
+    deviceSelect.addEventListener("change", (event) => {
+      const selectedDevice = event.target.value;
+      console.log(`Selected Device: ${selectedDevice}`);
+      
+	  setManifest(selectedDevice); //set the manifest so that it matches set device.
+	  
+    });
+	
+	
+	function setManifest(device) {
+		const installer = document.querySelector('esp-web-install-button');
+		installer.manifest = `${device}.json`
+		console.log("device updated!")
+	}
+	
+	
+	
+  const deviceMenu = document.getElementById("device-menu");
+  const isSupported = "serial" in navigator;
+  if (isSupported) {
+    deviceMenu.style.display = "block";
+  } else {
+    console.warn("no web serial. :/");
+  }
+  </script>
+</body>
+</html>
+
+
+
+
+
