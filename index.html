@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tactility Web Installer</title>
+  <link id="favicon" rel="shortcut icon" type="image/png" href="assets/favicon/favicon-1.png" />
   <script
     type="module"
     src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
@@ -123,8 +124,8 @@
     <h1>Tactility Web Installer</h1>
 
 	<div class="device-selector" id="device-menu" style="display: none;">
-	  <label for="device">Select Device:</label>
 	  <select id="device">
+		<option value="null">Select Device</option>
 		<option value="tdeck">T-Deck</option>
 		<option value="core2">Core2</option>
 		<option value="coreS3">CoreS3</option>
@@ -135,7 +136,7 @@
 
     
     <esp-web-install-button>
-      <button slot="activate">Install Now</button>
+      <button id="installActualButton" slot="activate">Install Now</button>
       <span slot="unsupported">Ah snap, your browser is not supported.</span>
       <span slot="not-allowed">Ah snap, you are not allowed to use this on HTTP.</span>
     </esp-web-install-button>
@@ -159,13 +160,18 @@
   <script>
     const deviceSelect = document.getElementById("device");
     const installButton = document.querySelector("esp-web-install-button");
-
+	const installActualButton = document.getElementById("installActualButton");
+	
+	
     deviceSelect.addEventListener("change", (event) => {
       const selectedDevice = event.target.value;
       console.log(`Selected Device: ${selectedDevice}`);
-      
-	  setManifest(selectedDevice); //set the manifest so that it matches set device.
-	  
+      if (selectedDevice != "null"){
+	  	setManifest(selectedDevice); //set the manifest so that it matches set device.
+		installActualButton.style.display = "inline";
+	  }	else {
+		installActualButton.style.display = "none";
+	  }
     });
 	
 	
@@ -184,6 +190,34 @@
   } else {
     console.warn("no web serial. :/");
   }
+  
+  
+    window.addEventListener("load", (event) => {
+	
+  // hide the button when no device selected
+      installActualButton.style.display = "none"; 
+  
+  
+  // animate the favicon. why now? XD
+	  const delay = 500;
+	  let lastTime = 0;
+	  let iconPosition = 1;
+	  function updateIcon(currentTime) {
+		if (currentTime - lastTime >= delay) {   
+		  if (iconPosition < 9) {		
+			document.getElementById('favicon').setAttribute('href',`assets/favicon/favicon-${iconPosition}.png`);
+			iconPosition = iconPosition + 1;
+		  } else {
+			iconPosition = 1
+		  }
+		  lastTime = currentTime;
+		}
+		requestAnimationFrame(updateIcon);
+	  }
+	  requestAnimationFrame(updateIcon);
+	});
+
+
   </script>
 </body>
 </html>
